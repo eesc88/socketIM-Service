@@ -20,16 +20,10 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
-
-var io = require('socket.io')(server);
-
-io.on('connection', function (socket) {
-    socket.emit('news', {hello: 'world'});
-    socket.on('news', function (data) {
-        console.log(data);
-    });
-});
+//开启socket服务器
+var socket = require('../socket')(server);
+//初始化数据库
+var mongoDB = require('../db');
 
 /**
  * Listen on provided port, on all network interfaces.
