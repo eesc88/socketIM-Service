@@ -6,12 +6,12 @@
  * Time：
  * Description：
  */
-
-
-
 var mongoose = require('mongoose');
-
+mongoose.Promise = require('bluebird');
 mongoose.connect('mongodb://localhost/socketIM');
+
+var Cat = mongoose.model('Cat', {name: String});
+
 
 
 module.exports = mongoose;

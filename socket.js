@@ -8,7 +8,8 @@
  */
 
 var socketIO = require('socket.io');
-var user = require('./models/user').user;
+var User = require('./models/user').User;
+var Food = require('./models/user').Food;
 
 function socket(server) {
     console.log('socket:');
@@ -23,8 +24,15 @@ function socket(server) {
 
         socket.on('news', function (data) {
             console.log(data);
-
-            user.users.save({userid: 1, password: 'ttest1'});
+            new Food({
+                username: 145456,
+                password: 'ttest1',
+                age:45
+            }).save().then(function (result) {
+                console.log(result);
+            }, function (error) {
+                console.log(error);
+            });
 
         });
     });
