@@ -7,23 +7,81 @@
  * Description：
  */
 
-console.log("loading user file");
+
 var mongoose = require("mongoose");	//	顶会议用户组件
+var User = mongoose.model('_User');
 
-var Schema = mongoose.Schema;	//	创建模型
-var userScheMa = new Schema({
-    username: String,
-    password: String,
-    age: Number,
-});	//	定义了一个新的模型，但是此模式还未和users集合有关联
+function user_model(user) {
+    this.username = user.username;
+    this.password = user.password;
+    this.objectId = user.id;
+}
 
-var Food = new Schema({
-    username: String,
-    password: String,
-    age: Number,
-});	//	定义了一个新的模型，但是此模式还未和users集合有关联
+/**
+ * 创建一个新的用户对象
+ * @param callback
+ */
+user_model.prototype.save = function (callback) {
+    new User({
+        username: this.username,
+        password: this.password
+    }).save(function (err, user, count) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, user);
+        }
+    });
+}
 
 
-exports.User = mongoose.model('User', userScheMa); //	与users集合关联
-exports.Food = mongoose.model('Food', Food); //	与users集合关联
-console.log("loading user file");
+/**
+ * 通过用户ID获取用户详情
+ * @param option
+ * @param callback
+ */
+user_model.findById = function (option, callback) {
+    User.findById(option.id, function (err, user) {
+        if (err) {
+            callback(err);
+        } else {
+            callback(null, user);
+        }
+    });
+}
+
+/**
+ * 通过用户ID删除用户
+ * @param option
+ * @param callback
+ */
+user_model.deleteById = function (option, callback) {
+    this.findById(option, function (err, user) {
+        if (err) {
+            callback(err);
+        } else {
+            user.remove(callback);
+        }
+    });
+}
+
+/**
+ * 根据用户ID更新用户资料
+ * @param id
+ * @param option
+ * @param callback
+ */
+user_model.updateById = function (id, option, callback) {
+    this.findById({id: id}, function (err, user) {
+        if (err) {
+            callback(err);
+        } else {
+            user.username = option.username;
+            user.password = option.password;
+            user.save(callback);
+        }
+    });
+}
+
+
+module.exports = user_model;

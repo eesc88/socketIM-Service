@@ -7,11 +7,15 @@
  * Description：
  */
 var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
+var Schema = mongoose.Schema;
+
+
+var user = new Schema({
+    username: String,
+    password: String,
+    age: Number,
+});	//	定义了一个新的模型，但是此模式还未和users集合有关联
+
+mongoose.model('_User', user);
+
 mongoose.connect('mongodb://localhost/socketIM');
-
-var Cat = mongoose.model('Cat', {name: String});
-
-
-
-module.exports = mongoose;
