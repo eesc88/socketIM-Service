@@ -13,29 +13,20 @@
     <!-- Bootstrap 核心 JavaScript 文件 -->
     <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <!--jquery.validate-->
-    <script src="http://lib.sinaapp.com/js/jquery/2.0.2/jquery-2.0.2.min.js"></script>
-    <script type="text/javascript" src="/js/message.js"></script>
-    <style type="text/css">
-        /*body {*/
-            /*background: url(http://www.17sucai.com/upload/55/2013-05-20/513b2e7957e1bc311e7cc2d92c5fb767_big.jpg) ;*/
-           /**/
-            /*ackground-repeat: repeat-x;*/
-            /*background-repeat: repeat-y;*/
+    <script src="http://static.runoob.com/assets/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 
-        /*}*/
+    <style type="text/css">
+        body {
+            background: #d1d1d1;
+            ackground-repeat: repeat-x;
+            background-repeat: repeat-y;
+
+        }
 
         .form {
             background: rgba(255, 255, 255, 0.2);
             width: 400px;
             margin: 100px auto;
-        }
-
-        #login_form {
-            display: block;
-        }
-
-        #register_form {
-            display: none;
         }
 
         .fa {
@@ -50,9 +41,6 @@
             padding-left: 26px;
         }
 
-        .checkbox {
-            padding-left: 21px;
-        }
     </style>
 </head>
 <body>
@@ -69,8 +57,9 @@
 <div class="container">
 
     <div class="form row">
-        <form class="form-horizontal col-sm-offset-3 col-md-offset-3" id="register_form">
-            <h3 class="form-title">Login to your account</h3>
+        <form class="form-horizontal col-sm-offset-3 col-md-offset-3" id="register_form" method="post"
+              action="/user/register">
+            <h3 class="form-title">Create to your account</h3>
             <div class="col-sm-9 col-md-9">
                 <div class="form-group">
                     <i class="fa fa-user fa-lg"></i>

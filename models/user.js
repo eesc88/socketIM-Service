@@ -14,6 +14,7 @@ var User = mongoose.model('_User');
 function user_model(user) {
     this.username = user.username;
     this.password = user.password;
+    this.email = user.email;
     this.objectId = user.id;
 }
 
@@ -24,7 +25,8 @@ function user_model(user) {
 user_model.prototype.save = function (callback) {
     new User({
         username: this.username,
-        password: this.password
+        password: this.password,
+        email: this.email,
     }).save(function (err, user, count) {
         if (err) {
             callback(err);
@@ -81,6 +83,14 @@ user_model.updateById = function (id, option, callback) {
             user.save(callback);
         }
     });
+}
+
+
+user_model.queryUser = function (option, callback) {
+    //User.find({user_id: option.user_id})
+    User.find()
+        .sort('-updated_at')
+        .exec(callback);
 }
 
 
