@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var moment = require( 'moment' );
+var moment = require('moment');
 var use_model = require('../models/user');
 
 /* GET users listing. */
@@ -45,11 +45,13 @@ function list(req, res, next) {
         if (err) {
             res.error(err);
         } else {
+            console.log('users:' + users);
+            console.dir(users);
             res.render('user_list',
                 {
                     title: 'Express Todo Example',
                     users: users,
-                    timenow : moment().format('YYYY-M-D H:mm'),
+                    timenow: moment().format('YYYY-M-D H:mm'),
                 });
         }
     });
