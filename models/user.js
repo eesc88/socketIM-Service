@@ -78,19 +78,41 @@ user_model.updateById = function (id, option, callback) {
         if (err) {
             callback(err);
         } else {
+            console.log(option);
             user.username = option.username;
             user.password = option.password;
+            user.email = option.email;
+            user.user_type = option.user_type;
             user.save(callback);
         }
     });
 }
 
-
+/**
+ *  获取所有的用户列表
+ * @param option
+ * @param callback
+ */
 user_model.queryUser = function (option, callback) {
     //User.find({user_id: option.user_id})
     User.find()
         .sort('-updated_at')
         .exec(callback);
+}
+
+/**
+ * 删除指定id的用户
+ * @param option option.id
+ * @param callback
+ */
+user_model.destroy = function (option, callback) {
+    this.findById(option, function (error, user) {
+        if (error) {
+            callback(error);
+        } else {
+            user.remove(callback);
+        }
+    });
 }
 
 

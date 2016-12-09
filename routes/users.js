@@ -3,15 +3,38 @@ var router = express.Router();
 var moment = require('moment');
 var use_model = require('../models/user');
 
-/* GET users listing. */
+//用户登录
 router.get('/', login);
+//执行用户登录操作
+router.post('/do_login', do_login);
+//用户注册
 router.get('/register', register);
+//执行注册动作
 router.post('/register', do_register);
+//用户列表
 router.get('/list', list);
+//指定用户Id删除用户
+router.get('/destroy', destroy_user);
+
+//编辑用户资料
+router.get('/edit/:id', edit);
+
+//编辑用户资料
+router.post('/edit', do_edit);
 
 
 function login(req, res, next) {
     res.render('login');
+};
+
+function do_login(req, res, next) {
+    var username = req.body.username;
+    var password = req.body.password;
+    console.log(username);
+    console.log(password);
+
+
+    res.redirect('/user/list');
 };
 
 
@@ -31,7 +54,7 @@ function do_register(req, res, next) {
         email: email,
     }).save(function (err, user) {
         if (err) {
-            res.error(err);
+            next(err);
         } else {
             res.redirect('/user/list');
         }
@@ -43,7 +66,7 @@ function do_register(req, res, next) {
 function list(req, res, next) {
     use_model.queryUser(null, function (err, users) {
         if (err) {
-            res.error(err);
+            next(err);
         } else {
             console.log('users:' + users);
             console.dir(users);
@@ -55,7 +78,74 @@ function list(req, res, next) {
                 });
         }
     });
+}
 
+/**
+ * 根据用户ID删除用户
+ * @param req
+ * @param res
+ * @param next
+ */
+function destroy_user(req, res, next) {
+    var user_id = req.query.id;
+    console.log('user_id:' + user_id);
+    use_model.destroy({id: user_id}, function (error, user) {
+        if (error) {
+            next(error);
+        } else {
+            console.log(user);
+            res.redirect('/user/list');
+        }
+    })
+}
+
+/**
+ * 编辑用户资料页面
+ * @param req
+ * @param res
+ * @param next
+ */
+function edit(req, res, next) {
+    var user_id = req.params.id;
+    console.log('user_id:' + user_id);
+    use_model.findById({id: user_id}, function (error, user) {
+        if (error) {
+            next(error);
+        } else {
+            res.render('edit_user', {
+                title: '修改资料',
+                users: [],
+                user: user
+            });
+        }
+    });
+
+}
+
+/**
+ * 执行用户内容修改
+ * @param req
+ * @param res
+ * @param next
+ */
+function do_edit(req, res, next) {
+    var username = req.body.username;
+    var pwd = req.body.pwd;
+    var email = req.body.email;
+    var user_type = req.body.user_type;
+    var id = req.body.id;
+    use_model.updateById(id, {
+        username: username,
+        password: pwd,
+        email: email,
+        user_type: user_type
+    }, function (error, user) {
+        if (error) {
+            next(error);
+        } else {
+            res.redirect('/user/list');
+        }
+    });
 }
 
 

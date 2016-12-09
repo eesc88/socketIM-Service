@@ -7,28 +7,29 @@
     </div>
 
 
-    <form action="/create" method="post" accept-charset="utf-8">
-        <div class="input-group input-group-lg">
-            <span class="input-group-addon"><%= timenow %></span>
-            <input type="text" class="form-control" name="content" placeholder="Start your work plan">
-            </button>
-        </div>
-    </form>
-    <br/>
-
-    <% users.forEach( function (user){ %>
-    <div class="input-group input-group-lg">
-
-        <span class="input-group-addon"><%= user.username %></span>
-        <input type="text" class="form-control" name="content" value="<%= user.password %>">
-
-      <span class="input-group-btn">
-        <a class="btn btn-default " href="/edit/<%= user._id %>" type="button">Edit</a>
-        <a class="btn btn-default " href="/destroy/<%= user._id %>" type="button">Del</a>
-      </span>
-        </button>
-    </div>
-    <br/>
-    <% }); %>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>password</th>
+            <th>Email</th>
+            <th>UserType</th>
+            <th>operation</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% users.forEach( function (user){ %>
+        <tr>
+            <td><%= user.get('username') %></td>
+            <td><%= user.get('password') %></td>
+            <td><%= user.get('email') %></td>
+            <td><%= user.get('user_type') %></td>
+            <td><a class="btn btn-default " href="/user/edit/<%= user.id %>" type="button">Edit</a>
+                <a class="btn btn-default " href="/user/destroy?id=<%= user.id %>" type="button">Del</a>
+            </td>
+        </tr>
+        <% }); %>
+        </tbody>
+    </table>
 </div>
 

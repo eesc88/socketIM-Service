@@ -15,6 +15,7 @@ var user = new Schema({
     password: String,
     age: Number,
     email: String,
+    user_type: String,
 });	//	定义了一个新的模型，但是此模式还未和users集合有关联
 
 mongoose.model('_User', user);

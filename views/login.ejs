@@ -17,7 +17,8 @@
     <link href="/css/signin.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="/assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="/assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -31,10 +32,10 @@
 
 <div class="container">
 
-    <form class="form-signin" role="form">
+    <form class="form-signin" role="form" action="/user/do_login" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="email" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" class="form-control" placeholder="Password" required>
+        <input type="text" class="form-control" placeholder="username" name="username" required autofocus>
+        <input type="password" class="form-control" placeholder="password" name="password" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
