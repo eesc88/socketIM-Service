@@ -34,6 +34,30 @@ function do_login(req, res, next) {
     console.log(password);
 
 
+    //var query_doc = {userid: req.body.userid, password: req.body.password};
+    //(function () {
+    //    user.count(query_doc, function (err, doc) {
+    //        if (doc == 1) {
+    //            console.log(query_doc.userid + ": login success in " + new Date());
+    //            res.render('homepage', {title: 'homepage'});
+    //        } else {
+    //            console.log(query_doc.userid + ": login failed in " + new Date());
+    //            res.redirect('/');
+    //        }
+    //    });
+    //})(query_doc);
+
+
+    new use_model({
+        username: username,
+        password: password
+    }).login(function (error, user) {
+
+
+        res.render('login');
+
+    });
+
     res.redirect('/user/list');
 };
 

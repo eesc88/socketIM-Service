@@ -20,4 +20,12 @@ var user = new Schema({
 
 mongoose.model('_User', user);
 
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function (callback) {
+    // yay!
+    console.log('数据库连接成功....');
+});
+
 mongoose.connect('mongodb://localhost/socketIM');

@@ -18,6 +18,23 @@ function user_model(user) {
     this.objectId = user.id;
 }
 
+user_model.prototype.login = function (callback) {
+    User({
+        username: this.username,
+        password: this.password,
+    }).find(function (error, users, count) {
+        console.log(error);
+        console.log(users);
+        console.log(count);
+        if (error) {
+            callback(error);
+        } else {
+            callback(null, users);
+        }
+    });
+}
+
+
 /**
  * 创建一个新的用户对象
  * @param callback
@@ -94,7 +111,6 @@ user_model.updateById = function (id, option, callback) {
  * @param callback
  */
 user_model.queryUser = function (option, callback) {
-    //User.find({user_id: option.user_id})
     User.find()
         .sort('-updated_at')
         .exec(callback);

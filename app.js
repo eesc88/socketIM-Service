@@ -8,11 +8,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var session = require('express-session');
 var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}))
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
